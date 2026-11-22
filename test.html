@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free English Level Test | Motive Academy</title>
+  <link rel="icon" href="logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <meta name="description" content="Free online English placement test from Motive Academy, Samarkand. 30 questions, about 10 minutes. Find your level and book a free trial lesson.">
+  <style>
+    :root { --navy: #0B2545; --blue: #2776AB; --cream: #FFF6E8; --gold: #D4A843; --text: #2A3650; --soft: #FFFDF9; --green: #2E8B57; --red: #C0392B; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Nunito', 'Trebuchet MS', Verdana, sans-serif; font-size: 18px; font-weight: 600; color: var(--text); line-height: 1.6; background: var(--cream); min-height: 100vh; display: flex; flex-direction: column; }
+    a { color: var(--blue); }
+
+    /* NAV (same as main site) */
+    nav { position: sticky; top: 0; z-index: 50; background: rgba(255,253,249,.97); box-shadow: 0 2px 14px rgba(11,37,69,.1);
+          display: flex; align-items: center; justify-content: space-between; padding: 8px 24px; gap: 12px; flex-wrap: wrap; }
+    nav .logo img { height: 56px; width: auto; }
+    .back { text-decoration: none; color: var(--navy); font-weight: 800; }
+    .back:hover { color: var(--blue); }
+    .lang { display: flex; gap: 6px; }
+    .lang button { font-family: inherit; border: 2px solid var(--navy); background: transparent; color: var(--navy); padding: 6px 14px; border-radius: 999px; cursor: pointer; font-weight: 800; font-size: .95rem; }
+    .lang button.active { background: var(--navy); color: white; }
+
+    main { flex: 1; width: 100%; max-width: 760px; margin: 0 auto; padding: 40px 20px 60px; }
+    .panel { background: white; border-radius: 24px; padding: 40px 36px; box-shadow: 0 8px 26px rgba(11,37,69,.09); border-top: 6px solid var(--blue); }
+    .hidden { display: none !important; }
+
+    h1 { color: var(--navy); font-size: 2.4rem; font-weight: 900; line-height: 1.2; margin-bottom: 14px; }
+    h1::after { content: ""; display: block; width: 70px; height: 6px; background: var(--gold); margin-top: 16px; border-radius: 999px; }
+    h2 { color: var(--navy); font-size: 1.6rem; font-weight: 900; line-height: 1.3; }
+    .lead { font-size: 1.15rem; margin: 18px 0; }
+    .facts { list-style: none; margin: 22px 0 8px; display: grid; gap: 10px; }
+    .facts li { background: var(--cream); border-left: 6px solid var(--gold); padding: 10px 16px; border-radius: 12px; font-weight: 800; color: var(--navy); }
+
+    .btn { display: inline-block; margin-top: 28px; background: var(--gold); color: var(--navy); padding: 16px 38px; border-radius: 999px; font-family: inherit;
+           text-decoration: none; font-weight: 900; border: none; cursor: pointer; font-size: 1.15rem; box-shadow: 0 6px 18px rgba(212,168,67,.45); transition: transform .15s; }
+    .btn:hover { transform: translateY(-2px); }
+    .btn:disabled { opacity: .45; cursor: not-allowed; transform: none; box-shadow: none; }
+    .btn.blue { background: var(--blue); color: white; box-shadow: 0 6px 18px rgba(39,118,171,.35); }
+    .btn.ghost { background: transparent; color: var(--navy); border: 2px solid var(--navy); box-shadow: none; }
+
+    /* Progress */
+    .top { display: flex; justify-content: space-between; align-items: center; font-weight: 800; color: var(--navy); margin-bottom: 10px; }
+    .bar { height: 12px; background: #efe6d6; border-radius: 999px; overflow: hidden; margin-bottom: 30px; }
+    .bar div { height: 100%; width: 0; background: linear-gradient(90deg, var(--blue), var(--gold)); border-radius: 999px; transition: width .3s; }
+
+    /* Question */
+    .question { font-size: 1.45rem; font-weight: 800; color: var(--navy); margin-bottom: 22px; line-height: 1.45; }
+    .gap { display: inline-block; min-width: 70px; border-bottom: 3px solid var(--gold); }
+    .options { display: grid; gap: 12px; }
+    .options button { text-align: left; font-family: inherit; font-size: 1.15rem; font-weight: 700; color: var(--text); background: var(--soft);
+                      border: 2px solid #e3d9c8; border-radius: 16px; padding: 16px 20px; cursor: pointer; transition: border-color .15s, background .15s; }
+    .options button:hover { border-color: var(--blue); }
+    .options button.picked { border-color: var(--blue); background: #e8f2fa; color: var(--navy); }
+    .nav-row { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .nav-row .btn { margin-top: 26px; }
+
+    /* Result */
+    .result-head { text-align: center; }
+    .level { display: inline-block; background: var(--navy); color: white; font-size: 2rem; font-weight: 900; padding: 10px 30px; border-radius: 999px; margin: 14px 0 6px; }
+    .cefr { display: inline-block; background: var(--gold); color: var(--navy); font-weight: 900; padding: 4px 16px; border-radius: 999px; margin-left: 8px; font-size: 1rem; vertical-align: middle; }
+    .score { font-size: 1.25rem; font-weight: 800; color: var(--blue); margin-top: 8px; }
+    .advice { background: var(--cream); border-left: 6px solid var(--gold); padding: 16px 20px; border-radius: 12px; margin: 24px 0; }
+    .note { font-size: .95rem; color: #7a8394; margin-top: 14px; }
+
+    form { margin-top: 10px; }
+    label { display: block; font-weight: 800; margin: 16px 0 8px; color: var(--navy); }
+    input { width: 100%; padding: 14px 16px; border: 2px solid #e3d9c8; border-radius: 14px; font-size: 1.05rem; font-family: inherit; font-weight: 600; background: #fffdf9; }
+    input:focus { outline: none; border-color: var(--blue); }
+
+    details.review { margin-top: 30px; }
+    details.review summary { cursor: pointer; font-weight: 800; color: var(--navy); }
+    .rv { padding: 10px 0; border-bottom: 1px solid #efe6d6; font-size: 1rem; }
+    .rv .ok { color: var(--green); font-weight: 800; }
+    .rv .no { color: var(--red); font-weight: 800; }
+
+    footer { background: var(--navy); color: white; text-align: center; padding: 28px 20px; }
+    footer p { opacity: .9; font-size: 1.05rem; font-weight: 700; }
+
+    @media (max-width: 600px) { .panel { padding: 28px 20px; } h1 { font-size: 1.9rem; } .question { font-size: 1.25rem; } .level { font-size: 1.6rem; } }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="logo" href="index.html"><img src="logo.png" alt="Motive Academy"></a>
+    <a class="back" href="index.html" data-i18n="back"></a>
+    <div class="lang">
+      <button data-lang="en">EN</button>
+      <button data-lang="ru">RU</button>
+      <button data-lang="uz">UZ</button>
+    </div>
+  </nav>
+
+  <main>
+    <!-- START SCREEN -->
+    <div class="panel" id="start">
+      <h1 data-i18n="title"></h1>
+      <p class="lead" data-i18n="intro"></p>
+      <ul class="facts">
+        <li data-i18n="fact1"></li>
+        <li data-i18n="fact2"></li>
+        <li data-i18n="fact3"></li>
+      </ul>
+      <button class="btn" id="begin" data-i18n="begin"></button>
+    </div>
+
+    <!-- QUESTION SCREEN -->
+    <div class="panel hidden" id="quiz">
+      <div class="top"><span id="counter"></span><span data-i18n="pick"></span></div>
+      <div class="bar"><div id="fill"></div></div>
+      <p class="question" id="qtext"></p>
+      <div class="options" id="options"></div>
+      <div class="nav-row">
+        <button class="btn ghost" id="prev" data-i18n="prev"></button>
+        <button class="btn blue" id="next"></button>
+      </div>
+    </div>
+
+    <!-- RESULT SCREEN -->
+    <div class="panel hidden" id="result">
+      <div class="result-head">
+        <h2 data-i18n="yourLevel"></h2>
+        <div><span class="level" id="levelName"></span><span class="cefr" id="cefr"></span></div>
+        <p class="score" id="scoreLine"></p>
+      </div>
+      <div class="advice">
+        <p id="levelText"></p>
+        <p style="margin-top:10px;"><strong data-i18n="recommend"></strong> <span id="course"></span></p>
+      </div>
+
+      <h2 data-i18n="bookTitle"></h2>
+      <form id="bookForm">
+        <label for="name" data-i18n="fName"></label>
+        <input id="name" required>
+        <label for="phone" data-i18n="fPhone"></label>
+        <input id="phone" type="tel" placeholder="+998 __ ___ __ __" required>
+        <button class="btn blue" type="submit" data-i18n="fSend"></button>
+        <p class="note" data-i18n="fNote"></p>
+      </form>
+      <p class="note" data-i18n="disclaimer"></p>
+
+      <details class="review">
+        <summary data-i18n="review"></summary>
+        <div id="reviewList"></div>
+      </details>
+      <button class="btn ghost" id="again" data-i18n="again"></button>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Motive Academy &middot; Where Leaders Learn.</p>
+  </footer>
+
+  <script>
+    // ===== QUESTIONS =====
+    // To edit: change the text, the options, and "a" (the correct option, exactly as written).
+    // They go from easy to hard: 1-5 Beginner, 6-10 Elementary, 11-15 Pre-Intermediate,
+    // 16-20 Intermediate, 21-30 Upper-Intermediate / Advanced.
+    var Q = [
+      { q: "My sister ___ a teacher.", o: ["is", "are", "am", "be"], a: "is" },
+      { q: "___ you like coffee?", o: ["Do", "Does", "Are", "Is"], a: "Do" },
+      { q: "There ___ two books on the table.", o: ["are", "is", "be", "am"], a: "are" },
+      { q: "I get up ___ 7 o'clock every day.", o: ["at", "in", "on", "to"], a: "at" },
+      { q: "I have ___ apple and a banana.", o: ["an", "a", "some", "any"], a: "an" },
+
+      { q: "Yesterday we ___ to the cinema.", o: ["went", "go", "gone", "goes"], a: "went" },
+      { q: "She is ___ than her brother.", o: ["taller", "tall", "tallest", "more tall"], a: "taller" },
+      { q: "Look! It ___ outside.", o: ["is raining", "rains", "rained", "rain"], a: "is raining" },
+      { q: "How ___ water do you drink every day?", o: ["much", "many", "lot", "few"], a: "much" },
+      { q: "I ___ swim when I was five years old.", o: ["could", "can", "am able", "must"], a: "could" },
+
+      { q: "I ___ in Samarkand since 2020.", o: ["have lived", "live", "am living", "lived"], a: "have lived" },
+      { q: "If it rains tomorrow, we ___ at home.", o: ["will stay", "stay", "would stay", "stayed"], a: "will stay" },
+      { q: "This book ___ by millions of people.", o: ["has been read", "has read", "is reading", "reads"], a: "has been read" },
+      { q: "He is used to ___ up early.", o: ["getting", "get", "got", "gets"], a: "getting" },
+      { q: "Students ___ use their phones during the exam. It's not allowed.", o: ["mustn't", "must", "needn't", "should"], a: "mustn't" },
+
+      { q: "By the time we arrived, the film ___.", o: ["had started", "started", "has started", "was starting"], a: "had started" },
+      { q: "If I ___ more free time, I would learn Japanese.", o: ["had", "have", "would have", "will have"], a: "had" },
+      { q: "I'm looking forward to ___ you next week.", o: ["seeing", "see", "saw", "be seen"], a: "seeing" },
+      { q: "She ___ have left already. Her coat isn't here.", o: ["must", "can't", "should", "would"], a: "must" },
+      { q: "The man ___ car was stolen called the police.", o: ["whose", "who", "which", "whom"], a: "whose" },
+
+      { q: "If she had studied harder, she ___ the exam.", o: ["would have passed", "would pass", "passed", "had passed"], a: "would have passed" },
+      { q: "Hardly ___ the door when the phone rang.", o: ["had I closed", "I had closed", "I closed", "did I closed"], a: "had I closed" },
+      { q: "It's high time we ___ a decision.", o: ["made", "make", "will make", "have made"], a: "made" },
+      { q: "The project was a success ___ the lack of money.", o: ["despite", "although", "however", "even"], a: "despite" },
+      { q: "I'd rather you ___ tell anyone about this.", o: ["didn't", "don't", "won't", "not"], a: "didn't" },
+      { q: "The government plans to ___ the new rules next year.", o: ["implement", "implicate", "imply", "impress"], a: "implement" },
+      { q: "His explanation was so ___ that nobody could follow it.", o: ["convoluted", "concise", "lucid", "candid"], a: "convoluted" },
+      { q: "Not until I read the letter ___ what had happened.", o: ["did I realise", "I realised", "I did realise", "realised I"], a: "did I realise" },
+      { q: "She was ___ to apologise, even though she knew she was wrong.", o: ["reluctant", "eager", "keen", "willing"], a: "reluctant" },
+      { q: "We need to ___ the pros and cons before we decide.", o: ["weigh up", "look up", "give up", "take up"], a: "weigh up" }
+    ];
+
+    // ===== LEVELS (score ranges out of 30) =====
+    var LEVELS = [
+      { max: 5,  cefr: "A1", key: "L1" },
+      { max: 10, cefr: "A2", key: "L2" },
+      { max: 15, cefr: "A2+/B1", key: "L3" },
+      { max: 20, cefr: "B1", key: "L4" },
+      { max: 25, cefr: "B2", key: "L5" },
+      { max: 30, cefr: "C1", key: "L6" }
+    ];
+
+    // ===== TEXTS IN 3 LANGUAGES =====
+    var T = {
+      en: {
+        back: "← Main page",
+        title: "Free English Level Test",
+        intro: "Find out your English level in about 10 minutes. Then book a free trial lesson in the right group at Motive Academy.",
+        fact1: "30 questions, from easy to hard",
+        fact2: "About 10 minutes, no registration",
+        fact3: "Instant result with your level",
+        begin: "Start the test",
+        pick: "Choose one answer",
+        of: "Question {n} of {t}",
+        prev: "← Back", next: "Next →", finish: "See my result",
+        yourLevel: "Your English level",
+        score: "{s} correct answers out of {t}",
+        recommend: "We recommend:",
+        L1: "Beginner", L2: "Elementary", L3: "Pre-Intermediate", L4: "Intermediate", L5: "Upper-Intermediate", L6: "Advanced",
+        L1t: "You are at the start of your English journey. We will build a strong base: basic grammar, everyday words, reading and speaking.",
+        L2t: "You know the basics. Now it's time to grow your vocabulary and speak with more confidence about daily life.",
+        L3t: "You understand a lot and can use the main tenses. Next step: more complex grammar and longer conversations.",
+        L4t: "You have a good level. You can start thinking about IELTS, or keep improving fluency in General English.",
+        L5t: "Very good! You are ready for serious IELTS preparation to reach your target band.",
+        L6t: "Excellent! You have a strong command of English. Focused IELTS training can help you aim for a high band.",
+        cGE: "General English", cIELTS: "IELTS preparation", cBoth: "General English (upper level) or IELTS",
+        bookTitle: "Book a free trial lesson",
+        fName: "Your name", fPhone: "Phone number", fSend: "Send via Telegram",
+        fNote: "Telegram will open with your message and result ready. Just press Send.",
+        disclaimer: "This online test checks grammar and vocabulary. At your trial lesson, our teacher will also check your speaking and confirm your level.",
+        review: "See my answers",
+        yours: "Your answer", correct: "Correct", none: "no answer",
+        again: "Take the test again",
+        msg: "Hello! I took the English level test on your website and would like a free trial lesson.",
+        lblName: "Name", lblPhone: "Phone", lblResult: "Result", lblCourse: "Course"
+      },
+      ru: {
+        back: "← Главная",
+        title: "Бесплатный тест на уровень английского",
+        intro: "Узнайте свой уровень английского примерно за 10 минут. А затем запишитесь на бесплатный пробный урок в подходящую группу Motive Academy.",
+        fact1: "30 вопросов, от простых к сложным",
+        fact2: "Около 10 минут, без регистрации",
+        fact3: "Мгновенный результат с вашим уровнем",
+        begin: "Начать тест",
+        pick: "Выберите один ответ",
+        of: "Вопрос {n} из {t}",
+        prev: "← Назад", next: "Далее →", finish: "Показать результат",
+        yourLevel: "Ваш уровень английского",
+        score: "{s} правильных ответов из {t}",
+        recommend: "Мы рекомендуем:",
+        L1: "Beginner", L2: "Elementary", L3: "Pre-Intermediate", L4: "Intermediate", L5: "Upper-Intermediate", L6: "Advanced",
+        L1t: "Вы в начале пути. Мы заложим прочную основу: базовая грамматика, повседневные слова, чтение и разговор.",
+        L2t: "Вы знаете основы. Теперь пора расширить словарный запас и увереннее говорить на повседневные темы.",
+        L3t: "Вы многое понимаете и используете основные времена. Следующий шаг: более сложная грамматика и длинные диалоги.",
+        L4t: "У вас хороший уровень. Можно начинать готовиться к IELTS или продолжать развивать беглость речи в General English.",
+        L5t: "Очень хорошо! Вы готовы к серьёзной подготовке к IELTS, чтобы получить нужный балл.",
+        L6t: "Отлично! Вы уверенно владеете английским. Целенаправленная подготовка к IELTS поможет вам получить высокий балл.",
+        cGE: "General English", cIELTS: "Подготовка к IELTS", cBoth: "General English (высокий уровень) или IELTS",
+        bookTitle: "Записаться на бесплатный пробный урок",
+        fName: "Ваше имя", fPhone: "Номер телефона", fSend: "Отправить через Telegram",
+        fNote: "Откроется Telegram с готовым сообщением и вашим результатом. Просто нажмите «Отправить».",
+        disclaimer: "Этот онлайн-тест проверяет грамматику и словарный запас. На пробном уроке учитель также проверит вашу устную речь и подтвердит уровень.",
+        review: "Посмотреть мои ответы",
+        yours: "Ваш ответ", correct: "Правильно", none: "нет ответа",
+        again: "Пройти тест ещё раз",
+        msg: "Здравствуйте! Я прошёл(а) тест на уровень английского на вашем сайте и хочу записаться на бесплатный пробный урок.",
+        lblName: "Имя", lblPhone: "Телефон", lblResult: "Результат", lblCourse: "Курс"
+      },
+      uz: {
+        back: "← Bosh sahifa",
+        title: "Ingliz tili darajasini aniqlash uchun bepul test",
+        intro: "Ingliz tili darajangizni taxminan 10 daqiqada bilib oling. So'ng Motive Academy'da o'zingizga mos guruhda bepul sinov darsiga yoziling.",
+        fact1: "30 ta savol, osondan qiyinga",
+        fact2: "Taxminan 10 daqiqa, ro'yxatdan o'tish shart emas",
+        fact3: "Natija va darajangiz darhol chiqadi",
+        begin: "Testni boshlash",
+        pick: "Bitta javobni tanlang",
+        of: "{n}-savol / {t}",
+        prev: "← Orqaga", next: "Keyingi →", finish: "Natijani ko'rish",
+        yourLevel: "Ingliz tili darajangiz",
+        score: "{t} ta savoldan {s} tasiga to'g'ri javob",
+        recommend: "Tavsiyamiz:",
+        L1: "Beginner", L2: "Elementary", L3: "Pre-Intermediate", L4: "Intermediate", L5: "Upper-Intermediate", L6: "Advanced",
+        L1t: "Siz ingliz tilini endi boshlayapsiz. Biz mustahkam poydevor quramiz: asosiy grammatika, kundalik so'zlar, o'qish va gapirish.",
+        L2t: "Siz asoslarni bilasiz. Endi so'z boyligini oshirish va kundalik mavzularda ishonch bilan gapirish vaqti keldi.",
+        L3t: "Siz ko'p narsani tushunasiz va asosiy zamonlardan foydalanasiz. Keyingi qadam: murakkabroq grammatika va uzunroq suhbatlar.",
+        L4t: "Darajangiz yaxshi. IELTS'ga tayyorlanishni boshlashingiz yoki General English'da ravon gapirishni rivojlantirishingiz mumkin.",
+        L5t: "Juda yaxshi! Siz kerakli ballni olish uchun IELTS'ga jiddiy tayyorgarlik ko'rishga tayyorsiz.",
+        L6t: "A'lo! Siz ingliz tilini yaxshi bilasiz. IELTS'ga maqsadli tayyorgarlik yuqori ball olishga yordam beradi.",
+        cGE: "General English", cIELTS: "IELTS'ga tayyorgarlik", cBoth: "General English (yuqori daraja) yoki IELTS",
+        bookTitle: "Bepul sinov darsiga yozilish",
+        fName: "Ismingiz", fPhone: "Telefon raqami", fSend: "Telegram orqali yuborish",
+        fNote: "Telegram tayyor xabar va natijangiz bilan ochiladi. Shunchaki «Yuborish» tugmasini bosing.",
+        disclaimer: "Bu onlayn test grammatika va so'z boyligini tekshiradi. Sinov darsida o'qituvchimiz og'zaki nutqingizni ham tekshirib, darajangizni tasdiqlaydi.",
+        review: "Javoblarimni ko'rish",
+        yours: "Sizning javobingiz", correct: "To'g'ri javob", none: "javob yo'q",
+        again: "Testni qayta topshirish",
+        msg: "Assalomu alaykum! Saytingizda ingliz tili darajasi testini topshirdim va bepul sinov darsiga yozilmoqchiman.",
+        lblName: "Ism", lblPhone: "Telefon", lblResult: "Natija", lblCourse: "Kurs"
+      }
+    };
+
+    // ===== APP =====
+    var current = "en", i = 0, answers = [], order = [];
+    var $ = function (id) { return document.getElementById(id); };
+
+    function fmt(s, v) { return s.replace(/\{(\w)\}/g, function (_, k) { return v[k]; }); }
+
+    function shuffle(arr) {
+      var a = arr.slice();
+      for (var k = a.length - 1; k > 0; k--) { var j = Math.floor(Math.random() * (k + 1)); var t = a[k]; a[k] = a[j]; a[j] = t; }
+      return a;
+    }
+
+    function setLang(l) {
+      current = l;
+      document.documentElement.lang = l;
+      document.querySelectorAll("[data-i18n]").forEach(function (el) { el.textContent = T[l][el.getAttribute("data-i18n")]; });
+      document.querySelectorAll(".lang button").forEach(function (b) { b.classList.toggle("active", b.getAttribute("data-lang") === l); });
+      try { localStorage.setItem("lang", l); } catch (e) {}
+      if (!$("quiz").classList.contains("hidden")) showQ();
+      if (!$("result").classList.contains("hidden")) showResult();
+    }
+
+    function show(id) {
+      ["start", "quiz", "result"].forEach(function (s) { $(s).classList.toggle("hidden", s !== id); });
+      window.scrollTo(0, 0);
+    }
+
+    function start() {
+      i = 0;
+      answers = new Array(Q.length);
+      order = Q.map(function (q) { return shuffle(q.o); });
+      show("quiz");
+      showQ();
+    }
+
+    function showQ() {
+      var t = T[current], q = Q[i];
+      $("counter").textContent = fmt(t.of, { n: i + 1, t: Q.length });
+      $("fill").style.width = ((i + 1) / Q.length * 100) + "%";
+      var parts = q.q.split("___");
+      $("qtext").innerHTML = "";
+      $("qtext").appendChild(document.createTextNode(parts[0]));
+      if (parts.length > 1) {
+        var g = document.createElement("span"); g.className = "gap"; g.textContent = answers[i] ? " " + answers[i] + " " : " ";
+        $("qtext").appendChild(g);
+        $("qtext").appendChild(document.createTextNode(parts[1]));
+      }
+      var box = $("options"); box.innerHTML = "";
+      order[i].forEach(function (opt) {
+        var b = document.createElement("button");
+        b.type = "button"; b.textContent = opt;
+        if (answers[i] === opt) b.className = "picked";
+        b.addEventListener("click", function () { answers[i] = opt; showQ(); });
+        box.appendChild(b);
+      });
+      $("prev").style.visibility = i === 0 ? "hidden" : "visible";
+      $("next").textContent = i === Q.length - 1 ? t.finish : t.next;
+      $("next").disabled = !answers[i];
+    }
+
+    function getResult() {
+      var s = 0;
+      Q.forEach(function (q, k) { if (answers[k] === q.a) s++; });
+      var lv = LEVELS.filter(function (l) { return s <= l.max; })[0];
+      var course = s <= 15 ? "cGE" : (s <= 20 ? "cBoth" : "cIELTS");
+      return { score: s, level: lv, course: course };
+    }
+
+    function showResult() {
+      var t = T[current], r = getResult();
+      $("levelName").textContent = t[r.level.key];
+      $("cefr").textContent = r.level.cefr;
+      $("scoreLine").textContent = fmt(t.score, { s: r.score, t: Q.length });
+      $("levelText").textContent = t[r.level.key + "t"];
+      $("course").textContent = t[r.course];
+
+      var list = $("reviewList"); list.innerHTML = "";
+      Q.forEach(function (q, k) {
+        var ok = answers[k] === q.a;
+        var d = document.createElement("div"); d.className = "rv";
+        var line1 = document.createElement("div"); line1.textContent = (k + 1) + ". " + q.q;
+        var line2 = document.createElement("div");
+        var mark = document.createElement("span"); mark.className = ok ? "ok" : "no"; mark.textContent = ok ? "✓ " : "✗ ";
+        line2.appendChild(mark);
+        line2.appendChild(document.createTextNode(t.yours + ": " + (answers[k] || t.none) + (ok ? "" : "  ·  " + t.correct + ": " + q.a)));
+        d.appendChild(line1); d.appendChild(line2); list.appendChild(d);
+      });
+    }
+
+    $("begin").addEventListener("click", start);
+    $("prev").addEventListener("click", function () { if (i > 0) { i--; showQ(); } });
+    $("next").addEventListener("click", function () {
+      if (!answers[i]) return;
+      if (i < Q.length - 1) { i++; showQ(); }
+      else { show("result"); showResult(); }
+    });
+    $("again").addEventListener("click", start);
+
+    // Booking form: opens Telegram with a ready message (same admin as the main site)
+    $("bookForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      var t = T[current], r = getResult();
+      var text = t.msg + "\n" +
+        t.lblName + ": " + $("name").value + "\n" +
+        t.lblPhone + ": " + $("phone").value + "\n" +
+        t.lblResult + ": " + r.score + "/" + Q.length + " — " + t[r.level.key] + " (" + r.level.cefr + ")\n" +
+        t.lblCourse + ": " + t[r.course];
+      window.open("https://t.me/Motive_Academy_admin?text=" + encodeURIComponent(text), "_blank");
+    });
+
+    document.querySelectorAll(".lang button").forEach(function (b) {
+      b.addEventListener("click", function () { setLang(b.getAttribute("data-lang")); });
+    });
+
+    var saved = "en";
+    try { saved = localStorage.getItem("lang") || "en"; } catch (e) {}
+    setLang(T[saved] ? saved : "en");
+  </script>
+</body>
+</html>
